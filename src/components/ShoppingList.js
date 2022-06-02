@@ -1,21 +1,30 @@
 import { plantList } from '../datas/plantList'
+import '../styles/ShoppingList.css'
 
 function ShoppingList() {
-    const categories = [];
-    plantList.forEach(function(acc, plant){
-        // console.log(acc.category)
-        if (!categories.includes(acc.category)) {
-            categories.push(acc.category);
-          }
-    });
-    // console.log(categories)
+	const categories = plantList.reduce(
+		(acc, plant) =>
+			acc.includes(plant.category) ? acc : acc.concat(plant.category),
+		[]
+	)
+
 	return (
-    <ul className='test'>
-         {categories.map((categorie) => (
-            <li key={categorie}>{categorie}</li>
-        ))}
-    </ul>
-    )
+		<div>
+			<ul>
+				{categories.map((cat) => (
+					<li key={cat}>{cat}</li>
+				))}
+			</ul>
+			<ul className='lmj-plant-list'>
+				{plantList.map((plant) => (
+					<li key={plant.id} className='lmj-plant-item'>
+						{plant.name}
+						{plant.isSpecialOffer && <div className='lmj-sales'>Soldes</div>}
+					</li>
+				))}
+			</ul>
+		</div>
+	)
 }
 
 export default ShoppingList
